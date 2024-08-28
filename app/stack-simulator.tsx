@@ -95,6 +95,22 @@ const StackSimulator = () => {
     const [scriptHex, setScriptHex] = useState('');
     const [parsedScript, setParsedScript] = useState<Array<{ type: string; value: string }>>([]);
     const [activeTab, setActiveTab] = useState<'stack' | 'parser'>('stack');
+    const [showChecksigExample, setShowChecksigExample] = useState(false);
+    const exampleData = {
+        z: '0x7c076ff316692a3d7eb3c3bb0f8b1488cf72e1afcd929e29307032997a838a3d',
+        sec: '04887387e452b8eacc4acfde10d9aaf7f6d9a0f975aabb10d006e4da568744d06c61de6d95231cd89026e286df3b6ae4a894a3378e393e93a0f45b666329a0ae34',
+        sig: '3045022000eff69ef2b1bd93a66ed5219add4fb51e11a840f404876325a1e8ffe0529a2c022100c7207fee197d27c618aea621406f6bf5ef6fca38681d82b2f06fddbdce6feab6'
+    };
+
+    const loadExampleData = () => {
+        setTransactionHash(exampleData.z);
+        setStack([
+            Buffer.from(exampleData.sig, 'hex'),
+            Buffer.from(exampleData.sec, 'hex')
+        ]);
+        setShowChecksigModal(true);
+        setShowChecksigExample(false);
+    };
 
     useEffect(() => {
         bitcoin.networks.testnet;
@@ -432,6 +448,51 @@ const StackSimulator = () => {
                                 Last operation: {lastOperation}
                             </div>
                         )}
+
+                        <div className="mt-6">
+                            <button
+                                onClick={() => setShowChecksigExample(!showChecksigExample)}
+                                className="text-orange-500 hover:text-orange-600 focus:outline-none"
+                            >
+                                {showChecksigExample ? 'Hide OP_CHECKSIG Example' : 'Show OP_CHECKSIG Example'}
+                            </button>
+                        </div>
+
+                        <AnimatePresence>
+                            {showChecksigExample && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md"
+                                >
+                                    <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-white">OP_CHECKSIG Example</h3>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                        Use this example to test the OP_CHECKSIG operation. Click "Load Example" to populate the stack and transaction hash.
+                                    </p>
+                                    <div className="space-y-4 text-sm">
+                                        <div className="bg-gray-200 dark:bg-gray-600 p-3 rounded-md">
+                                            <strong className="block text-gray-700 dark:text-gray-200 mb-1">Transaction Hash (z):</strong>
+                                            <span className="font-mono text-gray-600 dark:text-gray-300 break-all">{exampleData.z}</span>
+                                        </div>
+                                        <div className="bg-gray-200 dark:bg-gray-600 p-3 rounded-md">
+                                            <strong className="block text-gray-700 dark:text-gray-200 mb-1">Public Key (sec):</strong>
+                                            <span className="font-mono text-gray-600 dark:text-gray-300 break-all">{exampleData.sec}</span>
+                                        </div>
+                                        <div className="bg-gray-200 dark:bg-gray-600 p-3 rounded-md">
+                                            <strong className="block text-gray-700 dark:text-gray-200 mb-1">Signature (sig):</strong>
+                                            <span className="font-mono text-gray-600 dark:text-gray-300 break-all">{exampleData.sig}</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={loadExampleData}
+                                        className="mt-6 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"
+                                    >
+                                        Load Example
+                                    </button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 )}
             </div>

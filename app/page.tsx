@@ -8,7 +8,7 @@ export default function Home() {
         {/* Header */}
         <header className="w-full text-center">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-blue-600 mb-4">
-            Bitcoin Script Parser and Stack Simulator
+            Bitcoin Script Parser & Stack Simulator
           </h1>
           <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
             Explore and understand Bitcoin scripts interactively
