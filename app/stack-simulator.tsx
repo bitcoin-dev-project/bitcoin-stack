@@ -206,7 +206,7 @@ const StackSimulator = () => {
         if (item instanceof Buffer && item.toString().startsWith("Error:")) {
             return "bg-red-500 text-white";
         }
-        return "bg-orange-500 text-white";
+        return "bg-[#5a6170] text-white"; // Changed from orange to #5a6170
     };
 
     const formatStackItem = (item: StackItem, showDecimal: boolean): JSX.Element => {
