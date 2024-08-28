@@ -314,7 +314,7 @@ const StackSimulator = () => {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 20 }}
                                                 transition={{ duration: 0.2 }}
-                                                className={`p-2 rounded-md ${item.type === 'opcode' ? 'bg-orange-500' : item.type === 'data' ? 'bg-green-500' : 'bg-red-500'} text-white`}
+                                                className={`p-2 rounded-md ${item.type === 'opcode' ? 'bg-[#5a6170]' : item.type === 'data' ? 'bg-green-500' : 'bg-red-500'} text-white`}
                                             >
                                                 <div className="font-mono">
                                                     {item.type}: {item.value}
